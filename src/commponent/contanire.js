@@ -9,9 +9,12 @@ export default function Contanire() {
 
   const [dataList, handleSearchResult] = useState([])
   const [isLoadingList, handleLoadingList] = useState(false)
+  const [isFirstRender, handleFirstRendert] = useState(true)
+
   const [searchValue, setSearchValue] = useState('')
 
   const clear = () => {
+    handleFirstRendert(true)
 
     handleSearchResult([])
     handleSearchValue('')
@@ -19,7 +22,7 @@ export default function Contanire() {
   const getSearchResult = () => {
     handleSearchResult([])
     handleLoadingList(true)
-
+    handleFirstRendert(false)
     let api = `https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=${searchValue}`
     axios
       .get(api)
@@ -55,12 +58,9 @@ export default function Contanire() {
         searchValue,
         getSearchResult,
         handleSearchValue,
-        clear
-      ]}
-
-    >
-
-
+        clear,
+        isFirstRender
+      ]} >
       <div className="row contanier">
         <SearchBar
           getSearchResult={getSearchResult}
